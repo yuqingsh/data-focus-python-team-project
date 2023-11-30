@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
+
 def get_climate_data():
     # URL of the webpage
     # Pittsburgh, Miami, New York City, Philadelphia, Tampa, Orlando and Irvine
@@ -65,20 +66,17 @@ def get_climate_data():
 
 def scrape_one_city(city, state):
     url = (
-        "https://www.usclimatedata.com/climate/"
-        + city
-        + "/"
-        + state
-        + "/united-states/"
+            "https://www.usclimatedata.com/climate/"
+            + city
+            + "/"
+            + state
+            + "/united-states/"
     )
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
     table_div = soup.find("div", {"class": "monthly_tables"})
     tables = table_div.find_all("table")
-    data = []
-    data.append([])
-    data.append([])
-    data.append([])
+    data = [[], [], []]
     for table in tables:
         rows = table.find_all("tr")
         for i in range(1, 4):
@@ -88,8 +86,10 @@ def scrape_one_city(city, state):
                 data[i - 1].append(cell.text.strip())
     return data, response.text
 
+
 def main():
     get_climate_data()
+
 
 if __name__ == "__main__":
     main()
