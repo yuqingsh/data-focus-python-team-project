@@ -1,20 +1,64 @@
 import requests
-import pandas as pd
+import json
+import numpy as np
 
-# Specify the URL of the CSV file on the Airtable website
-url = "https://airtable.com/appzVzSeINK1S3EVR/shroOenW19l1m3w0H/tblxearKzw8W7ViN8"
+CITIES  = [
+    "pittsburgh",
+    "miami",
+    "new-york",
+    "philadelphia",
+    "tampa",
+    "orlando",
+    "irvine",
+]
 
-# Send a GET request to the URL
-response = requests.get(url)
+CITIES_STATES = {
+    "pittsburgh": "PA",
+    "miami": "FL",
+    "new-york": "NY",
+    "philadelphia": "PA",
+    "tampa": "FL",
+    "orlando": "FL",
+    "irvine": "CA",
+}
 
-# Check if the request was successful (status code 200)
-if response.status_code == 200:
-    # Use pandas to read the CSV data
-    print(response.text)
+BASE_URL = "https://api.usa.gov/crime/fbi/cde/arrest/state/"
 
-    # Now 'df' contains the data from the CSV file, and you can manipulate or export it as needed
-    # For example, you can export it to a local CSV file using the to_csv method:
-    # df.to_csv('output.csv', index=False)
-    print("CSV file exported successfully.")
-else:
-    print(f"Failed to fetch data. Status code: {response.status_code}")
+def fetch_data_one_city(city, secrety_key="rME1GBOinfksPYZEfhQkrQf7ElQjuaJa3UZX2qWe"):
+    state = CITIES_STATES[city]
+    url = BASE_URL + state + "/property_crime"
+    params = {
+        'from': 2019,
+        'to': 2023,
+        'API_KEY': secrety_key
+    }
+    response = requests.get(url, params=params)
+    data = json.loads(response.text)
+    data_list = data["data"]
+    crime_case_nums = []
+    for item in data_list[1:]:
+        crime_case_num = 0
+        crime_case_num += int(item["Motor Vehicle Theft"])
+        crime_case_num += int(item["Arson"])
+        crime_case_num += int(item["Burglary"])
+        crime_case_num += int(item["Embezzlement"])
+        crime_case_num += int(item["Forgery and Counterfeiting"])
+        crime_case_num += int(item["Larceny - Theft"])
+        crime_case_num += int(item["Vandalism"])
+        crime_case_num += int(item["Stolen Property: Buying, Receiving, Possessing"])
+        crime_case_nums.append(crime_case_num)
+
+    return np.mean(crime_case_nums)
+
+def fetch_data():
+    ret = {}
+    for city in CITIES:
+        ret[city] = fetch_data_one_city(city)
+    return ret
+
+def main():
+    data = fetch_data()
+    print(data)
+
+if __name__ == "__main__":
+    main()
