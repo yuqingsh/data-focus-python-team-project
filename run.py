@@ -1,10 +1,12 @@
 import climate_data
 import cpi_data
+import crime_data
 
 
 def main():
-    climate_data.get_climate_data()
-    cpi_data.get_cpi_data()
+    climate_score = climate_data.climate_get_score()
+    crime_score = crime_data.crime_get_score()
+    cpi_score = cpi_data.cpi_get_score()
 
 
 if __name__ == "__main__":
