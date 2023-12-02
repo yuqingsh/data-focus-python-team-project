@@ -49,5 +49,29 @@ def get_cpi_data():
     mean_df = result_df.drop(columns=['date']).groupby('city')['value'].mean().reset_index()
     mean_df = mean_df.rename(columns={'value': 'average'})
 
-    result_df.to_csv('output_file.csv', index=False)
-    mean_df.to_csv('mean_output_file.csv', index=False)
+    # result_df.to_csv('output_file.csv', index=False)
+    # mean_df.to_csv('mean_output_file.csv', index=False)
+
+    mean_df.sort_values(by='average', inplace=True)
+    city_list = mean_df['city'].tolist()
+
+    return city_list
+
+
+def cpi_get_score():
+    city_list = get_cpi_data()
+    ans = {}
+    max_score = 7
+    for city in city_list:
+        ans[city] = max_score
+        max_score -= 1
+
+    return ans
+
+
+def main():
+    cpi_get_score()
+
+
+if __name__ == "__main__":
+    main()

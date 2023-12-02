@@ -63,6 +63,8 @@ def get_climate_data():
         for raw in raws:
             file.write(raw)
 
+    return df
+
 
 def scrape_one_city(city, state):
     url = (
@@ -87,8 +89,29 @@ def scrape_one_city(city, state):
     return data, response.text
 
 
+def climate_get_score():
+    df = get_climate_data()
+    # Convert the 'high' and 'low' columns to numeric
+    df['high'] = pd.to_numeric(df['high'])
+    df['low'] = pd.to_numeric(df['low'])
+
+    # Group by 'city' and calculate the average of 'high' and 'low'
+    result = df.groupby('city').agg({'high': 'mean', 'low': 'mean'}).reset_index()
+    result['tmp_diff'] = result['high'] - result['low']
+    result.sort_values(by='tmp_diff', inplace=True)
+    city_list = result['city'].tolist()
+
+    ans = {}
+    max_score = 7
+    for city in city_list:
+        ans[city] = max_score
+        max_score -= 1
+
+    return ans
+
+
 def main():
-    get_climate_data()
+    climate_get_score()
 
 
 if __name__ == "__main__":

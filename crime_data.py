@@ -2,7 +2,7 @@ import requests
 import json
 import numpy as np
 
-CITIES  = [
+CITIES = [
     "pittsburgh",
     "miami",
     "new-york",
@@ -23,6 +23,7 @@ CITIES_STATES = {
 }
 
 BASE_URL = "https://api.usa.gov/crime/fbi/cde/arrest/state/"
+
 
 def fetch_data_one_city(city, secrety_key="rME1GBOinfksPYZEfhQkrQf7ElQjuaJa3UZX2qWe"):
     state = CITIES_STATES[city]
@@ -50,15 +51,40 @@ def fetch_data_one_city(city, secrety_key="rME1GBOinfksPYZEfhQkrQf7ElQjuaJa3UZX2
 
     return np.mean(crime_case_nums)
 
+
 def fetch_data():
     ret = {}
     for city in CITIES:
         ret[city] = fetch_data_one_city(city)
     return ret
 
+
+def crime_get_score():
+    data = fetch_data()
+    values = list(data.values())
+    values.sort()
+    values_dict = {}
+    max_score = 7
+
+    for i in range(len(values)):
+        if i == 0:
+            values_dict[values[i]] = max_score
+        else:
+            if values[i - 1] < values[i]:
+                max_score -= 1
+            values_dict[values[i]] = max_score
+
+    ans = {}
+    for key, value in data.items():
+        ans[key] = values_dict[value]
+
+    return ans
+
+
 def main():
     data = fetch_data()
     print(data)
+
 
 if __name__ == "__main__":
     main()
