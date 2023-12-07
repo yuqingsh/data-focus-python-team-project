@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
 
-cities = ['Pittsburgh', 'Miami', 'New York City', 'Philadelphia', 'Tampa', 'Orlando', 'Irvine']
+cities = ['Pittsburgh', 'Miami', 'New-York', 'Philadelphia', 'Tampa', 'Orlando', 'Irvine']
 series_ids = ['CUUSA321SA0', 'CUURA320SEHA', 'CUURA101SA0', 'CUURA102SA0', 'CUURA422SA0', 'CUURA316SA0', 'CUURA421SA0']
 
 

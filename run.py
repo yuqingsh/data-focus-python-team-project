@@ -6,7 +6,7 @@ import pandas as pd
 
 
 def main():
-    show_overall_score()
+    interact_user()
 
 
 def show_menu():
@@ -41,22 +41,25 @@ def show_single_score(input_category):
         print(change_dict_to_df(cpi_score))
     else:
         hospice_score = hospice_data.hospice_get_score()
-        print(hospice_score)
+        print(change_dict_to_df(hospice_score))
 
 
 def show_overall_score():
+    hospice_score = hospice_data.hospice_get_score()
+    record_value = hospice_score['NEW YORK']
+    del hospice_score['NEW YORK']
+    hospice_score['NEW-YORK'] = record_value
+
     score_list = [climate_data.climate_get_score(), crime_data.crime_get_score(), cpi_data.cpi_get_score(),
-                  hospice_data.hospice_get_score()]
-    city_list = ['PITTSBURGH', 'MIAMI', 'NEW YORK', 'PHILADELPHIA', 'TAMPA', 'ORLANDO', 'IRVINE']
+                  hospice_score]
+    city_list = ['PITTSBURGH', 'MIAMI', 'NEW-YORK', 'PHILADELPHIA', 'TAMPA', 'ORLANDO', 'IRVINE']
     total_score = {}
 
     for city in city_list:
         total_score[city] = 0
 
     for score in score_list:
-        print(score)
-        for key, value in score:
-            print(key + ":" + value)
+        for key, value in score.items():
             total_score[key.upper()] = total_score[key.upper()] + value
 
     ans_df = change_dict_to_df(total_score)

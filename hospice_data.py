@@ -9,14 +9,11 @@ def main():
 
 def download_csv(url, save_path):
     try:
-        print("downloading hospice data...")
         response = requests.get(url)
         response.raise_for_status()  # Raise an exception for HTTP errors (4xx or 5xx)
 
         with open(save_path, 'wb') as file:
             file.write(response.content)
-
-        print(f"CSV file downloaded successfully and saved at: {save_path}")
 
     except requests.exceptions.HTTPError as errh:
         print(f"HTTP Error: {errh}")
