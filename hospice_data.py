@@ -65,13 +65,25 @@ def calculate_hospice_score(filtered_df):
 
 
 def hospice_get_score():
-    hospice_url = 'https://data.cms.gov/provider-data/api/1/pdc/query/252m-zfp9/0/download?conditions%5B0%5D%5Bproperty%5D=measure_name&conditions%5B0%5D%5Boperator%5D=%3D&conditions%5B0%5D%5Bvalue%5D=Hospice%20Care%20Index%20Overall%20Score&properties=1-2-3-4-5-6-7-8-9-10-11-12-13-14-15&format=csv'
+    hospice_url = ('https://data.cms.gov/provider-data/api/1/pdc/query/252m-zfp9/0/download?'
+                   'conditions%5B0%5D%5Bproperty'
+                   '%5D=measure_name&conditions%5B0%5D%5Boperator%5D=%3D&conditions%'
+                   '5B0%5D%5Bvalue%5D=Hospice%20Care%20Index%'
+                   '20Overall%20Score&properties=1-2-3-4-5-6-7-8-9-10-11-12-13-14-15&format=csv')
     save_path = './hospice_raw.csv'
     download_csv(hospice_url, save_path)
     raw_df = load_csv_to_dataframe(save_path)
     filtered_df = clean_hospice_data(raw_df)
     hospice_score = calculate_hospice_score(filtered_df)
-    return hospice_score
+
+    city_list = hospice_score['citytown']
+    max_score = 7
+    ans = {}
+    for city in city_list:
+        ans[city] = max_score
+        max_score -= 1
+
+    return ans
 
 
 if __name__ == "__main__":
