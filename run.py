@@ -77,6 +77,8 @@ def interact_user():
             show_single_score(user_input)
         elif user_input == '5':
             show_overall_score()
+        elif user_input == '1':
+            climate_data.plot_graph()
         else:
             pass
 

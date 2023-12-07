@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 def get_climate_data():
@@ -109,6 +110,33 @@ def climate_get_score():
 
     return ans
 
+def plot_graph():
+    df = get_climate_data()
+    df['high'] = pd.to_numeric(df['high'])
+    df['low'] = pd.to_numeric(df['low'])
+    df['month'] = pd.to_datetime(df['month'])
+
+    cities = df['city'].unique()
+
+    fig, axs = plt.subplots(3, 1, sharex=True, figsize=(10, 8))
+
+    lines = []
+    labels = []
+
+    for city in cities:
+        city_data = df[df['city'] == city]
+        city_data['avg'] = (city_data['high'] + city_data['low']) / 2
+
+        line1, = axs[0].plot(city_data['month'], city_data['avg'])
+        line2, = axs[1].plot(city_data['month'], city_data['high'])
+        line3, = axs[2].plot(city_data['month'], city_data['low'])
+
+        lines.append(line1)
+        labels.append(f'{city} Average')
+
+    fig.legend(lines, labels, loc='upper right')
+
+    plt.show()
 
 def main():
     climate_get_score()
