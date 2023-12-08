@@ -93,6 +93,7 @@ def scrape_one_city(city, state):
 def preload_climate_data():
     return get_climate_data()
 
+
 def climate_get_score(df):
     # df = get_climate_data()
     # Convert the 'high' and 'low' columns to numeric
@@ -112,6 +113,7 @@ def climate_get_score(df):
         max_score -= 1
 
     return ans
+
 
 def plot_graph():
     df = get_climate_data()
@@ -140,6 +142,7 @@ def plot_graph():
     fig.legend(lines, labels, loc='upper right')
 
     plt.show()
+
 
 def main():
     climate_get_score()

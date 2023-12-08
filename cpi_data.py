@@ -39,6 +39,7 @@ def get_data(series_id, city_name, result_df):
         # Print an error message if the request was not successful
         print(f"Error: {response.status_code} - {response.text}")
 
+
 def preload_cpi_data():
     result_df = pd.DataFrame()
 
@@ -72,7 +73,7 @@ def cpi_get_score(cpi_df):
 
 
 def main():
-    cpi_get_score()
+    preload_cpi_data()
 
 
 if __name__ == "__main__":

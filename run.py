@@ -5,12 +5,12 @@ import hospice_data
 import pandas as pd
 from enum import Enum
 
-
 # global vars
 climate_df = None
 cpi_df = None
 crime_dict = None
 hospice_df = None
+
 
 # User choice
 class Choice(Enum):
@@ -86,6 +86,7 @@ def show_overall_score():
 
     print(ans_df)
 
+
 def preload_all_data():
     # preload data to save time for user interaction
     global climate_df
@@ -110,8 +111,8 @@ def interact_user():
         show_menu()
         user_input = input('    Your choice: ').strip()
         if user_input == 'Q' or user_input == 'q':
-            break;
-        
+            break
+
         choice = Choice(int(user_input))
         if choice == Choice.CRIME or choice == Choice.CPI or choice == Choice.HOSPICE:
             show_single_score(choice)

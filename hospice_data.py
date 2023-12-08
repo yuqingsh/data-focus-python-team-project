@@ -61,6 +61,7 @@ def calculate_hospice_score(filtered_df):
     hospice_score['ranking'] = range(1, len(hospice_score) + 1)
     return hospice_score
 
+
 def preload_hospice_data():
     hospice_url = ('https://data.cms.gov/provider-data/api/1/pdc/query/252m-zfp9/0/download?'
                    'conditions%5B0%5D%5Bproperty'
@@ -72,6 +73,7 @@ def preload_hospice_data():
     raw_df = load_csv_to_dataframe(save_path)
     filtered_df = clean_hospice_data(raw_df)
     return filtered_df
+
 
 def hospice_get_score(hospice_df):
     hospice_score = calculate_hospice_score(hospice_df)
