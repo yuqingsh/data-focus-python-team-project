@@ -3,7 +3,8 @@ import pandas as pd
 
 
 def main():
-    hospice_score = hospice_get_score()
+    df = preload_hospice_data()
+    hospice_score = hospice_get_score(df)
     print(hospice_score)
 
 

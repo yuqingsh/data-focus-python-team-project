@@ -3,6 +3,7 @@ import cpi_data
 import crime_data
 import hospice_data
 import pandas as pd
+from enum import Enum
 
 
 # global vars
@@ -10,6 +11,15 @@ climate_df = None
 cpi_df = None
 crime_dict = None
 hospice_df = None
+
+# User choice
+class Choice(Enum):
+    TEMPERATURE = 1
+    CRIME = 2
+    CPI = 3
+    HOSPICE = 4
+    OVERALL = 5
+
 
 def main():
     preload_all_data()
@@ -40,10 +50,10 @@ def change_dict_to_df(input_dict):
 
 
 def show_single_score(input_category):
-    if input_category == '2':
+    if input_category == Choice.CRIME:
         crime_score = crime_data.crime_get_score(crime_dict)
         print(change_dict_to_df(crime_score))
-    elif input_category == '3':
+    elif input_category == Choice.CPI:
         cpi_score = cpi_data.cpi_get_score(cpi_df)
         print(change_dict_to_df(cpi_score))
     else:
@@ -99,11 +109,15 @@ def interact_user():
     while user_input != 'Q' and user_input != 'q':
         show_menu()
         user_input = input('    Your choice: ').strip()
-        if user_input == '2' or user_input == '3' or user_input == '4':
-            show_single_score(user_input)
-        elif user_input == '5':
+        if user_input == 'Q' or user_input == 'q':
+            break;
+        
+        choice = Choice(int(user_input))
+        if choice == Choice.CRIME or choice == Choice.CPI or choice == Choice.HOSPICE:
+            show_single_score(choice)
+        elif choice == Choice.OVERALL:
             show_overall_score()
-        elif user_input == '1':
+        elif choice == Choice.TEMPERATURE:
             climate_data.plot_graph()
         else:
             pass
