@@ -58,10 +58,11 @@ def fetch_data():
         ret[city] = fetch_data_one_city(city)
     return ret
 
+def preload_crime_data():
+    return fetch_data()
 
-def crime_get_score():
-    data = fetch_data()
-    values = list(data.values())
+def crime_get_score(crime_dict):
+    values = list(crime_dict.values())
     values.sort()
     values_dict = {}
     max_score = 7
@@ -75,7 +76,7 @@ def crime_get_score():
             values_dict[values[i]] = max_score
 
     ans = {}
-    for key, value in data.items():
+    for key, value in crime_dict.items():
         ans[key] = values_dict[value]
 
     return ans

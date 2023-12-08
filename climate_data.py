@@ -90,8 +90,11 @@ def scrape_one_city(city, state):
     return data, response.text
 
 
-def climate_get_score():
-    df = get_climate_data()
+def preload_climate_data():
+    return get_climate_data()
+
+def climate_get_score(df):
+    # df = get_climate_data()
     # Convert the 'high' and 'low' columns to numeric
     df['high'] = pd.to_numeric(df['high'])
     df['low'] = pd.to_numeric(df['low'])

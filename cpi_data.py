@@ -39,14 +39,16 @@ def get_data(series_id, city_name, result_df):
         # Print an error message if the request was not successful
         print(f"Error: {response.status_code} - {response.text}")
 
-
-def get_cpi_data():
+def preload_cpi_data():
     result_df = pd.DataFrame()
 
     for i in range(7):
         result_df = get_data(series_ids[i], cities[i], result_df)
+    return result_df
 
-    mean_df = result_df.drop(columns=['date']).groupby('city')['value'].mean().reset_index()
+
+def get_cpi_data(cpi_df):
+    mean_df = cpi_df.drop(columns=['date']).groupby('city')['value'].mean().reset_index()
     mean_df = mean_df.rename(columns={'value': 'average'})
 
     # result_df.to_csv('output_file.csv', index=False)
@@ -58,8 +60,8 @@ def get_cpi_data():
     return city_list
 
 
-def cpi_get_score():
-    city_list = get_cpi_data()
+def cpi_get_score(cpi_df):
+    city_list = get_cpi_data(cpi_df)
     ans = {}
     max_score = 7
     for city in city_list:
