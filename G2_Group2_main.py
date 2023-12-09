@@ -111,16 +111,16 @@ def interact_user():
         show_menu()
         user_input = input('    Your choice: ').strip()
         if user_input == 'Q' or user_input == 'q':
-            break
-
-        choice = Choice(int(user_input))
-        if choice == Choice.CRIME or choice == Choice.CPI or choice == Choice.HOSPICE:
-            show_single_score(choice)
-        elif choice == Choice.OVERALL:
-            show_overall_score()
-        elif choice == Choice.TEMPERATURE:
-            climate_data.plot_graph()
-        else:
+            break;
+        try:
+            choice = Choice(int(user_input))
+            if choice == Choice.CRIME or choice == Choice.CPI or choice == Choice.HOSPICE:
+                show_single_score(choice)
+            elif choice == Choice.OVERALL:
+                show_overall_score()
+            elif choice == Choice.TEMPERATURE:
+                climate_data.plot_graph()
+        except:
             pass
 
 
