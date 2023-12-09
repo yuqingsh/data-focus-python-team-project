@@ -58,8 +58,10 @@ def fetch_data():
         ret[city] = fetch_data_one_city(city)
     return ret
 
+
 def preload_crime_data():
     return fetch_data()
+
 
 def crime_get_score(crime_dict):
     values = list(crime_dict.values())
