@@ -2,11 +2,19 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 
 
 def get_climate_data():
-    # URL of the webpage
-    # Pittsburgh, Miami, New York City, Philadelphia, Tampa, Orlando and Irvine
+    """_summary_
+    This function scrapes the climate data from the website and returns a dataframe.
+
+    Args:
+    Returns:
+        df: a dataframe with columns: city, state, month, high, low, precipitation
+    """
+
+    # Cities and states to scrape
     cities = [
         "pittsburgh",
         "miami",
@@ -25,14 +33,20 @@ def get_climate_data():
         "florida",
         "california",
     ]
+
+    # Create an empty dataframe
     df = pd.DataFrame(
         columns=["city", "state", "month", "high", "low", "precipitation"]
     )
     raws = []
+
+    # Scrape the data for each city
     for i in range(len(cities)):
         data, raw = scrape_one_city(cities[i], states[i])
         raws.append(raw)
+        # Add the data to the dataframe
         for j in range(12):
+            # print(data[0][j], data[1][j], data[2][j])
             df = pd.concat(
                 [
                     df,
@@ -59,7 +73,9 @@ def get_climate_data():
                 ],
                 ignore_index=True,
             )
+    # redirect the output to a csv file
     df.to_csv("output.csv", index=False)
+    # redirect the raw html to a txt file
     with open("raw.txt", "w") as file:
         for raw in raws:
             file.write(raw)
@@ -68,6 +84,16 @@ def get_climate_data():
 
 
 def scrape_one_city(city, state):
+    """ this function scrapes the climate data for one city and returns a dataframe and the raw html
+
+    Args:
+        city (_type_): the name of the city
+        state (_type_): the name of the state
+
+    Returns:
+        data (dataframe): a dataframe with columns: city, state, month, high, low, precipitation
+        response (string): the raw html
+    """
     url = (
             "https://www.usclimatedata.com/climate/"
             + city
@@ -116,6 +142,7 @@ def climate_get_score(df):
 
 
 def plot_graph():
+    # TODO: @yuqingsh add subtitles, unit
     df = get_climate_data()
     df['high'] = pd.to_numeric(df['high'])
     df['low'] = pd.to_numeric(df['low'])
@@ -138,6 +165,19 @@ def plot_graph():
 
         lines.append(line1)
         labels.append(f'{city} Average')
+
+    # Set titles for each subplot
+    axs[0].set_title('Average Temperature')
+    axs[1].set_title('High Temperature')
+    axs[2].set_title('Low Temperature')
+
+    # Set y labels for all subplots
+    axs[0].set_ylabel('Temperature')
+    axs[1].set_ylabel('Temperature')
+    axs[2].set_ylabel('Temperature')
+
+    # Set x label for the last subplot only
+    axs[2].set_xlabel('Month')
 
     fig.legend(lines, labels, loc='upper right')
 
