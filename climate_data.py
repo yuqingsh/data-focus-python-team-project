@@ -1,3 +1,11 @@
+"""climate_data.py module
+Author: Yuqing Shen (@yuqingsh)
+
+This file contains the functions to scrape the climate data from the website and return a dataframe.
+It also contains the function to calculate the score for each city based on the climate data.
+It also contains the function to plot the graph of the climate data.
+
+"""
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
