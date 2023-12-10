@@ -181,6 +181,7 @@ def plot_graph():
 
     fig.legend(lines, labels, loc='upper right')
 
+    plt.savefig('climate.png')
     plt.show()
 
 
