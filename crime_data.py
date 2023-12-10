@@ -1,3 +1,12 @@
+"""cpi_data.py module
+Author: Evelyn Sun (yumengs)
+
+This file call the crime api to get the crime data for all cities.
+It defines the function to calculate the score for each city using crime data.
+
+It imports requests, json and numpy modules, and is imported by G2_Group2_main module.
+
+"""
 import requests
 import json
 import numpy as np

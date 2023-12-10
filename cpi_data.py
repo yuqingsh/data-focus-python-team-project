@@ -1,3 +1,13 @@
+"""cpi_data.py module
+Author: Kefan Li (kefanli)
+
+This file call the CPI API to get the CPI data for all cities.
+It also contains the function to aggregate the collected CPI data,
+clean data, sort the data and calculate the score for each city based on the CPI data.
+
+It imports requests and pandas modules, and is imported by G2_Group2_main module.
+
+"""
 import requests
 import pandas as pd
 
