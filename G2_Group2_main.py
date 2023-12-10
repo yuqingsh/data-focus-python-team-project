@@ -51,6 +51,11 @@ def show_menu():
 
 
 def change_dict_to_df(input_dict):
+    """
+    This function change the dictionary to dataframe
+    :param input_dict: the input dictionary
+    :return: the dataframe
+    """
     city_list = []
     score_list = []
     for key, value in input_dict.items():
@@ -61,6 +66,11 @@ def change_dict_to_df(input_dict):
 
 
 def show_single_score(input_category):
+    """
+    This function shows the score for each city
+    :param input_category: the input category
+    :return: the score for that category
+    """
     if input_category == Choice.CRIME:
         crime_score = crime_data.crime_get_score(crime_dict)
         print(change_dict_to_df(crime_score))
@@ -73,6 +83,10 @@ def show_single_score(input_category):
 
 
 def show_overall_score():
+    """
+    This function shows the overall score for each city
+    :return: the overall score for each city
+    """
     hospice_score = hospice_data.hospice_get_score(hospice_df)
     record_value = hospice_score['NEW YORK']
     del hospice_score['NEW YORK']
@@ -99,6 +113,10 @@ def show_overall_score():
 
 
 def preload_all_data():
+    """
+    This function preloads all data
+    :return: all data
+    """
     # preload data to save time for user interaction
     global climate_df
     global cpi_df
@@ -117,12 +135,16 @@ def preload_all_data():
 
 
 def interact_user():
+    """
+    This function interacts with user
+    :return: interaction with user
+    """
     user_input = ''
     while user_input != 'Q' and user_input != 'q':
         show_menu()
         user_input = input('    Your choice: ').strip()
         if user_input == 'Q' or user_input == 'q':
-            break;
+            break
         try:
             choice = Choice(int(user_input))
             if choice == Choice.CRIME or choice == Choice.CPI or choice == Choice.HOSPICE:
