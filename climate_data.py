@@ -121,6 +121,11 @@ def preload_climate_data():
 
 
 def climate_get_score(df):
+    """
+    This function returns the score for each city
+    :param df: the input cities climate dataframe
+    :return: the score for each city
+    """
     # df = get_climate_data()
     # Convert the 'high' and 'low' columns to numeric
     df['high'] = pd.to_numeric(df['high'])
@@ -142,7 +147,10 @@ def climate_get_score(df):
 
 
 def plot_graph():
-    # TODO: @yuqingsh add subtitles, unit
+    """
+    This function plots the graph of the climate data
+    :return: the plot
+    """
     df = get_climate_data()
     df['high'] = pd.to_numeric(df['high'])
     df['low'] = pd.to_numeric(df['low'])
