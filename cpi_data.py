@@ -1,11 +1,19 @@
 import requests
 import pandas as pd
 
+#
 cities = ['Pittsburgh', 'Miami', 'New-York', 'Philadelphia', 'Tampa', 'Orlando', 'Irvine']
 series_ids = ['CUUSA321SA0', 'CUURA320SEHA', 'CUURA101SA0', 'CUURA102SA0', 'CUURA422SA0', 'CUURA316SA0', 'CUURA421SA0']
 
 
 def get_data(series_id, city_name, result_df):
+    """
+    This function gets the data from the API and returns a dataframe for single city
+    :param series_id: the series id of the data
+    :param city_name: the name of the city
+    :param result_df: the dataframe to store the data
+    :return: the dataframe with the data
+    """
     # Specify the API endpoint and parameters
     api_url = "https://api.stlouisfed.org/fred/series/observations"
     api_key = "fa792f5d75d3b3daa222f49e37ac9191"
@@ -41,6 +49,10 @@ def get_data(series_id, city_name, result_df):
 
 
 def preload_cpi_data():
+    """
+    This function preloads the cpi data for all cities
+    :return: the all cities cpi dataframe
+    """
     result_df = pd.DataFrame()
 
     for i in range(7):
@@ -49,6 +61,11 @@ def preload_cpi_data():
 
 
 def get_cpi_data(cpi_df):
+    """
+    This function returns the list of cities based on the score
+    :param cpi_df: the input cities cpi dataframe
+    :return: the list of cities
+    """
     mean_df = cpi_df.drop(columns=['date']).groupby('city')['value'].mean().reset_index()
     mean_df = mean_df.rename(columns={'value': 'average'})
 
@@ -62,6 +79,11 @@ def get_cpi_data(cpi_df):
 
 
 def cpi_get_score(cpi_df):
+    """
+    This function returns the score for each city
+    :param cpi_df: the input cities cpi dataframe
+    :return: the score for each city
+    """
     city_list = get_cpi_data(cpi_df)
     ans = {}
     max_score = 7

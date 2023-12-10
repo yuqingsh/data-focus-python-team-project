@@ -1,3 +1,14 @@
+"""G2_Group2_main 
+Author: All Team members
+
+This file contains the main application program. 
+It imports four data modules including climate_data, cpi_data, crime_data, hospice_data,
+as well as pandas module for dataframe operation, and enum module for user input.
+
+When starting, the application will first execute preload_all_data() to load all data needed
+in to memory. After that, it will execute show_menu() to present an interactive interface for users.
+
+"""
 import climate_data
 import cpi_data
 import crime_data

@@ -1,3 +1,11 @@
+"""hospice_data module
+Author: Caifei Hong (caifeih)
+This file processes hospice data. It downloads a csv file via URL,
+cleans the data, and calculate average hospice scores for seven cities.
+
+It imports requests and pandas modules, and is imported by G2_Group2_main module.
+
+"""
 import requests
 import pandas as pd
 

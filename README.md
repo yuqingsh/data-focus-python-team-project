@@ -6,6 +6,12 @@
 * Kane Shen (yuqingsh)
 * Evelyn Sun (yumengs)
 
+# Final Presentation
+Watch the final presentation video here:
+
+https://drive.google.com/file/d/1Bx94NAY3-iZY6OyuQUkQA5BuFrNM1S08/view?usp=drive_link
+
+
 # How to Install and Run
 Open the code folder, run `G2_Group2_main.py` file. The application will first show "Starting the app..." and then start loading all the data necessary for the application. After all data are loaded, a user interface will show on the terminal (Figure 1).
 

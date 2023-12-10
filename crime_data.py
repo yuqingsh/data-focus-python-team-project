@@ -26,6 +26,12 @@ BASE_URL = "https://api.usa.gov/crime/fbi/cde/arrest/state/"
 
 
 def fetch_data_one_city(city, secrety_key="rME1GBOinfksPYZEfhQkrQf7ElQjuaJa3UZX2qWe"):
+    """
+    This function fetches the crime data for one city
+    :param city: the name of the city
+    :param secrety_key: the secret key for the api
+    :return: the crime case for this city
+    """
     state = CITIES_STATES[city]
     url = BASE_URL + state + "/property_crime"
     params = {
@@ -53,6 +59,10 @@ def fetch_data_one_city(city, secrety_key="rME1GBOinfksPYZEfhQkrQf7ElQjuaJa3UZX2
 
 
 def fetch_data():
+    """
+    This function fetches the crime data for all cities
+    :return: the crime case for all cities
+    """
     ret = {}
     for city in CITIES:
         ret[city] = fetch_data_one_city(city)
@@ -64,6 +74,11 @@ def preload_crime_data():
 
 
 def crime_get_score(crime_dict):
+    """
+    This function returns the score for each city
+    :param crime_dict: the input cities crime statistics
+    :return: the score for each city
+    """
     values = list(crime_dict.values())
     values.sort()
     values_dict = {}
